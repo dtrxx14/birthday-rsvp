@@ -60,7 +60,7 @@ export default function PhotoGallery() {
           <img
             src="/assets/images/backgrounds/blue-background.jpg"
             alt=""
-            className="w-1/2 h-full object-cover opacity-10"
+            className="w-1/2 h-full object-cover opacity-40 object-top md:object-center"
           />
         </div>
       </div>

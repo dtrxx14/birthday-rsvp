@@ -4,11 +4,11 @@ export default function HeroBanner() {
   const characters = [
     { src: "/assets/images/characters/Abby.png", style: "top-10 -left-[50px] lg:-left-[70px] rotate-[90deg] w-[150px] lg:w-[200px]" },
     { src: "/assets/images/characters/Bert.png", style: "bottom-72 -right-[80px] -rotate-[40deg] w-[200px] lg:w-[250px]" },
-    { src: "/assets/images/characters/Big Bird.png", style: "-bottom-[70px] -left-[70px] lg:left-0 rotate-6 w-[230px] lg:w-[300px]" },
-    { src: "/assets/images/characters/Cookie Monster.png", style: "-bottom-[70px] right-0 -rotate-6 w-[200px] lg:w-[280px]" },
+    { src: "/assets/images/characters/Big Bird.png", style: "-bottom-[70px] -left-[90px] lg:left-0 rotate-6 w-[230px] lg:w-[300px]" },
+    { src: "/assets/images/characters/Cookie Monster.png", style: "-bottom-[70px] -right-[45px] lg:right-0 -rotate-6 w-[200px] lg:w-[280px]" },
     { src: "/assets/images/characters/Elmo1.png", style: "top-[50px] lg:top-[60px] left-28 lg:left-72 -translate-y-1/2 rotate-[160deg] w-[200px] lg:w-[250px]" },
-    { src: "/assets/images/characters/Grover.png", style: "-bottom-[70px] left-10 lg:left-36 w-[200px] lg:w-[250px]" },
-    { src: "/assets/images/characters/Rosita.png", style: "top-[50px] lg:top-[60px] right-20 lg:right-72 -translate-y-1/2 -rotate-[160deg] w-[180px] lg:w-[250px]" },
+    { src: "/assets/images/characters/Grover.png", style: "-bottom-[70px] -left-[20px] lg:left-36 w-[200px] lg:w-[250px]" },
+    { src: "/assets/images/characters/Rosita.png", style: "hidden md:block top-[50px] lg:top-[60px] right-20 lg:right-72 -translate-y-1/2 -rotate-[160deg] w-[180px] lg:w-[250px]" },
   ];
 
   return (

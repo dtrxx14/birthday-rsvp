@@ -9,7 +9,7 @@ export default function EventDetails() {
           <img
             src="/assets/images/backgrounds/red-background.jpg"
             alt=""
-            className="w-1/2 h-full object-cover opacity-40"
+            className="w-1/2 h-full object-cover opacity-40 object-left md:object-center"
           />
         </div>
       </div>
@@ -17,7 +17,7 @@ export default function EventDetails() {
         {/* Header */}
         <div className="py-12 text-center">
           <p className="text-lg md:text-2xl text-rsvpBg">
-            Join us for a fun and colorful celebration of
+            Join us for a fun and colorful <br  className="block md:hidden"/> celebration of
           </p>
           <p className="text-4xl md:text-7xl font-chalk px-8 py-2 rounded bg-rsvpText/90 text-rsvpBg mt-2">
             <span className="text-primary">L</span>

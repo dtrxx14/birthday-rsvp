@@ -203,12 +203,12 @@ export default function RSVPForm() {
           <img
             src="/assets/images/backgrounds/green-background.jpg"
             alt=""
-            className="w-1/2 h-full object-cover opacity-20"
+            className="w-1/2 h-full object-cover opacity-40 object-left md:object-center"
           />
         </div>
       </div>
 
-  <div ref={formRef} className="w-full max-w-md relative z-10 mt-16">
+  <div ref={formRef} className="w-full max-w-md relative z-10 mt-16 px-4 md:px-0">
     <h2 className="text-5xl md:text-6xl font-chalk text-center text-rsvpBg mb-4">
       RSVP
     </h2>
