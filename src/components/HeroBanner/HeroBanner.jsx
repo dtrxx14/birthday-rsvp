@@ -1,6 +1,16 @@
 import React from "react";
 
 export default function HeroBanner() {
+  const characters = [
+    { src: "/assets/images/characters/Abby.png", style: "top-10 -left-[50px] lg:-left-[70px] rotate-[90deg] w-[150px] lg:w-[200px]" },
+    { src: "/assets/images/characters/Bert.png", style: "bottom-72 -right-[80px] -rotate-[40deg] w-[200px] lg:w-[250px]" },
+    { src: "/assets/images/characters/Big Bird.png", style: "-bottom-[70px] -left-[70px] lg:left-0 rotate-6 w-[230px] lg:w-[300px]" },
+    { src: "/assets/images/characters/Cookie Monster.png", style: "-bottom-[70px] right-0 -rotate-6 w-[200px] lg:w-[280px]" },
+    { src: "/assets/images/characters/Elmo1.png", style: "top-[50px] lg:top-[60px] left-28 lg:left-72 -translate-y-1/2 rotate-[160deg] w-[200px] lg:w-[250px]" },
+    { src: "/assets/images/characters/Grover.png", style: "-bottom-[70px] left-10 lg:left-36 w-[200px] lg:w-[250px]" },
+    { src: "/assets/images/characters/Rosita.png", style: "top-[50px] lg:top-[60px] right-20 lg:right-72 -translate-y-1/2 -rotate-[160deg] w-[180px] lg:w-[250px]" },
+  ];
+
   return (
     <section className="relative h-screen w-full overflow-hidden bg-rsvpBg text-white">
       {/* Moving background */}
@@ -19,6 +29,16 @@ export default function HeroBanner() {
         </div>
       </div>
 
+      {/* Characters */}
+      {characters.map((char, idx) => (
+        <img
+          key={idx}
+          src={char.src}
+          alt=""
+          className={`absolute pointer-events-none ${char.style}`}
+        />
+      ))}
+
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center">
         <img
@@ -31,8 +51,7 @@ export default function HeroBanner() {
           <span className="text-secondary">I</span>
           <span className="text-accent">R</span>
           <span className="text-success">S</span>
-          <span className="text-softBlue">T</span>
-          <span className="text-secondary"> </span>
+          <span className="text-softBlue">T</span>{" "}
           <span className="text-primary">B</span>
           <span className="text-secondary">I</span>
           <span className="text-accent">R</span>
@@ -55,14 +74,12 @@ export default function HeroBanner() {
               stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              {/* Top arrow */}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"
                 d="M7 6l5 5 5-5"
               />
-              {/* Bottom arrow */}
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

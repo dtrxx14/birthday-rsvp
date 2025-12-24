@@ -21,6 +21,7 @@ module.exports = {
       animation: {
         marquee: 'marquee 30s linear infinite',
         slideDown: "slideDown 0.5s linear forwards",
+        wave: 'wave 2s ease-in-out infinite',
       },
       keyframes: {
         marquee: {
@@ -30,6 +31,10 @@ module.exports = {
         slideDown: {
           "0%": { opacity: "0", transform: "translateY(-30px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        wave: {
+          '0%, 100%': { transform: 'rotate(-10deg)' },
+          '50%': { transform: 'rotate(10deg)' },
         },
       },
     },

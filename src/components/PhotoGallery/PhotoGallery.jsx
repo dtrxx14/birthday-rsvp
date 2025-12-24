@@ -53,13 +53,23 @@ export default function PhotoGallery() {
   };
 
   return (
-    <section className="w-full bg-softBlue text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto py-12">
+    <section className="relative md:min-h-screen flex items-center justify-center w-full overflow-hidden bg-softBlue text-white">
+      {/* Moving background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="flex w-[200%] h-full">
+          <img
+            src="/assets/images/backgrounds/blue-background.jpg"
+            alt=""
+            className="w-1/2 h-full object-cover opacity-10"
+          />
+        </div>
+      </div>
+      <div className="relative max-w-7xl mx-auto py-12">
         <h2 className="text-5xl md:text-6xl font-chalk text-center text-rsvpBg mb-4 px-4">
           PHOTO GALLERY
         </h2>
         <p className="text-center text-2xl md:text-3xl text-rsvpBg mb-8 px-4">
-          Luke's special moments and growth <br /> captured in pictures
+          Luke's special moments and growth captured in pictures
         </p>
 
         {/* GRID */}

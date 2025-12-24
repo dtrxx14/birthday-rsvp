@@ -2,8 +2,18 @@ import React from "react";
 
 export default function EventDetails() {
   return (
-    <section className="w-full bg-primary text-white overflow-hidden md:min-h-screen">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:justify-center md:min-h-screen">
+    <section className="relative md:min-h-screen flex items-center justify-center w-full overflow-hidden bg-primary text-white">
+      {/* Moving background */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <div className="flex w-[200%] h-full">
+          <img
+            src="/assets/images/backgrounds/red-background.jpg"
+            alt=""
+            className="w-1/2 h-full object-cover opacity-40"
+          />
+        </div>
+      </div>
+      <div className="relative max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:justify-center md:min-h-screen">
         {/* Header */}
         <div className="py-12 text-center">
           <p className="text-lg md:text-2xl text-rsvpBg">
