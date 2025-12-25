@@ -38,7 +38,7 @@ export default function AttendingStep({
           </p>
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-6 text-rsvpText">
           {/* Email */}
           <div>
             <label className="block text-sm text-secondary mb-1">Email *</label>

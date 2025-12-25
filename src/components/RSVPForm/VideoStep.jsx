@@ -53,7 +53,7 @@ export default function VideoStep({
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-2xl shadow-lg mb-8 relative z-10"
+        className="bg-white text-rsvpText p-8 rounded-2xl shadow-lg mb-8 relative z-10"
       >
         {/* Floating Rosita2 above modal */}
         <img
