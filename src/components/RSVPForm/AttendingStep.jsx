@@ -55,7 +55,7 @@ export default function AttendingStep({
           {/* Adults */}
           <div>
             <label className="block text-sm text-secondary">Adults</label>
-            <p className="text-xs text-gray-400 mb-2">Include yourself • Max 2</p>
+            <p className="text-xs text-gray-400 mb-2">Include yourself • Max 3</p>
             <div className="inline-flex w-full border rounded-lg overflow-hidden">
               <button
                 type="button"
@@ -110,7 +110,7 @@ export default function AttendingStep({
             <>
               <div>
                 <label className="block text-secondary">Children</label>
-                <p className="text-xs text-gray-400 mb-2">Max 2</p>
+                <p className="text-xs text-gray-400 mb-2">Max 3</p>
                 <div className="inline-flex w-full border rounded-lg overflow-hidden">
                   <button
                     type="button"
