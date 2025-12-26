@@ -1,22 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 export default function PhotoGallery() {
-  const photos = Array.from(
-    { length: 18 },
-    (_, i) => `/assets/images/gallery/luke_${i + 1}.jpg`
-  );
-
+  const photos = Array.from({ length: 18 }, (_, i) => `/assets/images/gallery/luke_${i + 1}.jpg`);
   const PHOTOS_PER_LOAD = 6;
 
   const [visibleCount, setVisibleCount] = useState(PHOTOS_PER_LOAD);
   const [activeIndex, setActiveIndex] = useState(null);
   const [showLightbox, setShowLightbox] = useState(false);
 
-  // Track previous count
   const prevVisibleCount = useRef(visibleCount);
-
-  const isOpen = activeIndex !== null;
   const visiblePhotos = photos.slice(0, visibleCount);
+  const isOpen = activeIndex !== null;
 
   const open = (index) => {
     setActiveIndex(index);
@@ -28,11 +22,13 @@ export default function PhotoGallery() {
     setTimeout(() => setActiveIndex(null), 300);
   };
 
-  const prev = () =>
+  const prev = useCallback(() => {
     setActiveIndex((i) => (i === 0 ? photos.length - 1 : i - 1));
+  }, [photos.length]);
 
-  const next = () =>
+  const next = useCallback(() => {
     setActiveIndex((i) => (i === photos.length - 1 ? 0 : i + 1));
+  }, [photos.length]);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "auto";
@@ -45,7 +41,7 @@ export default function PhotoGallery() {
 
     if (isOpen) window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  }, [isOpen]);
+  }, [isOpen, prev, next]);
 
   const loadMore = () => {
     prevVisibleCount.current = visibleCount;
@@ -64,6 +60,7 @@ export default function PhotoGallery() {
           />
         </div>
       </div>
+
       <div className="relative max-w-7xl mx-auto py-12">
         <h2 className="text-5xl md:text-6xl font-chalk text-center text-rsvpBg mb-4 px-4">
           PHOTO GALLERY
@@ -76,24 +73,18 @@ export default function PhotoGallery() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4 px-4">
           {visiblePhotos.map((src, index) => {
             const isNew = index >= prevVisibleCount.current;
-
             return (
               <button
                 key={index}
                 onClick={() => open(index)}
-                style={
-                  isNew
-                    ? { animationDelay: `${(index - prevVisibleCount.current) * 70}ms` }
-                    : {}
-                }
-                className={`
-                  bg-white rounded-lg shadow-md overflow-hidden focus:outline-none
-                  ${isNew ? "opacity-0 animate-slideDown" : ""}
-                `}
+                style={isNew ? { animationDelay: `${(index - prevVisibleCount.current) * 70}ms` } : {}}
+                className={`bg-white rounded-lg shadow-md overflow-hidden focus:outline-none ${
+                  isNew ? "opacity-0 animate-slideDown" : ""
+                }`}
               >
                 <img
                   src={src}
-                  alt={`Photo ${index + 1}`}
+                  alt={`Luke ${index + 1}`}
                   className="w-full h-[300px] object-cover hover:scale-105 transition"
                 />
               </button>
@@ -106,11 +97,7 @@ export default function PhotoGallery() {
           <div className="flex justify-center mt-20">
             <button
               onClick={loadMore}
-              className="
-                px-8 py-3 rounded-full border-2 border-white
-                text-white font-semibold tracking-wide
-                hover:bg-white hover:text-warning transition
-              "
+              className="px-8 py-3 rounded-full border-2 border-white text-white font-semibold tracking-wide hover:bg-white hover:text-warning transition"
             >
               See more
             </button>
@@ -135,10 +122,7 @@ export default function PhotoGallery() {
             onClick={(e) => e.stopPropagation()}
           />
 
-          <button
-            onClick={close}
-            className="absolute top-6 right-6 text-white text-3xl"
-          >
+          <button onClick={close} className="absolute top-6 right-6 text-white text-3xl">
             ✕
           </button>
 
@@ -154,14 +138,13 @@ export default function PhotoGallery() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="w-6 h-6"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-6 h-6"
             >
               <path d="M15 18l-6-6 6-6" />
             </svg>
-
           </button>
 
           <button
@@ -176,10 +159,10 @@ export default function PhotoGallery() {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="w-6 h-6"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-6 h-6"
             >
               <path d="M9 6l6 6-6 6" />
             </svg>

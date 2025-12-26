@@ -8,6 +8,7 @@ export default function AttendingStep({
   handleAdults,
   handleChildren,
   resetForm,
+  attendee,
 }) {
   return (
     <div className="relative">
@@ -146,9 +147,10 @@ export default function AttendingStep({
 
           <button
             type="submit"
-            className="w-full bg-primary text-white py-3 rounded-xl uppercase text-lg hover:bg-red-600 transition"
+            disabled={attendee}
+            className="w-full bg-primary text-white py-3 rounded-xl uppercase text-lg hover:bg-red-600 transition disabled:opacity-50"
           >
-            Submit RSVP
+            {attendee ? "Submitting..." : "Submit RSVP"}
           </button>
         </div>
       </form>

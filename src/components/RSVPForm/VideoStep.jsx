@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import { errorAlert } from "../../utils/alert";
 
 export default function VideoStep({
   formData,
@@ -11,6 +12,11 @@ export default function VideoStep({
   const [isDragging, setIsDragging] = useState(false);
   const dragCounter = useRef(0);
   const fileInputRef = useRef(null);
+
+  // Constants for validation
+  const MAX_VIDEO_MB = 25;
+  const MAX_VIDEO_BYTES = MAX_VIDEO_MB * 1024 * 1024;
+  const MAX_DURATION_SECONDS = 5 * 60; // 5 minutes
 
   const handleDragEnter = (e) => {
     e.preventDefault();
@@ -26,20 +32,63 @@ export default function VideoStep({
 
   const handleDragOver = (e) => e.preventDefault();
 
-  const handleDrop = (e) => {
+  // Validate video duration
+  const validateVideoDuration = (file) =>
+    new Promise((resolve, reject) => {
+      const video = document.createElement("video");
+      video.preload = "metadata";
+
+      video.onloadedmetadata = () => {
+        URL.revokeObjectURL(video.src);
+        resolve(video.duration);
+      };
+
+      video.onerror = () => reject("Invalid video file");
+      video.src = URL.createObjectURL(file);
+    });
+
+  // Shared validation for both drag & drop and file select
+  const validateAndSetVideo = async (file) => {
+    // Type check
+    if (!file.type.startsWith("video/")) {
+      errorAlert("Failed to Upload", "Please upload a valid video file (mp4/mov/webm).");
+      return;
+    }
+
+    // Size check
+    if (file.size > MAX_VIDEO_BYTES) {
+      errorAlert("Failed to Upload", `Video too large. Max allowed is ${MAX_VIDEO_MB} MB.`);
+      return;
+    }
+
+    // Duration check
+    try {
+      const duration = await validateVideoDuration(file);
+      if (duration > MAX_DURATION_SECONDS) {
+        errorAlert("Failed to Upload", "Video must be 5 minutes or less.");
+        return;
+      }
+    } catch {
+      errorAlert("Failed to Upload", "Unable to read video duration. Please try another file.");
+      return;
+    }
+
+    // Passed all checks
+    setFormData((prev) => ({ ...prev, videoFile: file }));
+  };
+
+  const handleDrop = async (e) => {
     e.preventDefault();
     dragCounter.current = 0;
     setIsDragging(false);
 
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFormData((prev) => ({ ...prev, videoFile: e.dataTransfer.files[0] }));
-    }
+    const file = e.dataTransfer.files?.[0];
+    if (file) await validateAndSetVideo(file);
   };
 
-  const handleFileChange = (e) => {
-    if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ ...prev, videoFile: e.target.files[0] }));
-    }
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (file) await validateAndSetVideo(file);
   };
 
   const removeFile = () => {
@@ -49,17 +98,15 @@ export default function VideoStep({
 
   return (
     <div className="relative">
-      
-
       <form
         onSubmit={handleSubmit}
         className="bg-white text-rsvpText p-8 rounded-2xl shadow-lg mb-8 relative z-10"
       >
-        {/* Floating Rosita2 above modal */}
+        {/* Floating Rosita1 above modal */}
         <img
-            src="/assets/images/characters/Rosita1.png"
-            alt="Rosita1"
-            className="absolute -top-[140px] left-0 w-[240px] h-40 z-0 pointer-events-none"
+          src="/assets/images/characters/Rosita1.png"
+          alt="Rosita1"
+          className="absolute -top-[140px] left-0 w-[240px] h-40 z-0 pointer-events-none"
         />
         {/* Header */}
         <div className="mb-4">
@@ -73,7 +120,9 @@ export default function VideoStep({
               Change response
             </button>
           </div>
-          <p className="text-gray-400 text-xs">If you are unable to attend the event, we would still love to include you. Please send us a short video greeting to be included in our celebration.</p>
+          <p className="text-gray-400 text-xs">
+            If you are unable to attend the event, you may send a short video greeting.
+          </p>
         </div>
 
         <div className="space-y-6">
@@ -84,7 +133,9 @@ export default function VideoStep({
               type="email"
               required
               value={formData.email}
-              onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, email: e.target.value }))
+              }
               className="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-secondary outline-none"
             />
           </div>
@@ -96,7 +147,9 @@ export default function VideoStep({
               type="text"
               required
               value={formData.name}
-              onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, name: e.target.value }))
+              }
               className="w-full rounded-lg border px-3 py-2 focus:ring-2 focus:ring-secondary outline-none"
             />
           </div>
@@ -109,7 +162,9 @@ export default function VideoStep({
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
             className={`cursor-pointer rounded-md border-2 border-dashed transition-all duration-200 ${
-              isDragging ? "bg-secondary/20 border-gray-400" : "bg-white border-gray-300 hover:bg-gray-50"
+              isDragging
+                ? "bg-secondary/20 border-gray-400"
+                : "bg-white border-gray-300 hover:bg-gray-50"
             }`}
           >
             <div className="p-6 min-h-[200px] flex flex-col items-center justify-center text-center pointer-events-none">
@@ -121,6 +176,9 @@ export default function VideoStep({
               <h4 className="text-base font-semibold text-slate-600">
                 <span className="text-secondary">Choose a file</span> or drag it here
               </h4>
+              <p className="text-xs text-gray-400 mt-2">
+                Max 5 minutes • Max {MAX_VIDEO_MB} MB • MP4/MOV/WebM
+              </p>
             </div>
 
             <input
@@ -137,7 +195,8 @@ export default function VideoStep({
             <div className="bg-gray-100 p-4 rounded-md">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-xs text-slate-600 font-semibold">
-                  {formData.videoFile.name} • {(formData.videoFile.size / 1024 / 1024).toFixed(2)} MB
+                  {formData.videoFile.name} •{" "}
+                  {(formData.videoFile.size / 1024 / 1024).toFixed(2)} MB
                 </p>
                 <button
                   type="button"

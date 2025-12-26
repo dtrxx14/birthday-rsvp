@@ -20,6 +20,7 @@ export default function RSVPForm() {
 
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploading, setUploading] = useState(false);
+  const [attendee, setAttendee] = useState(false);
 
   // 🔥 REF FOR AUTO-SCROLL
   const formRef = useRef(null);
@@ -114,6 +115,7 @@ export default function RSVPForm() {
     });
     setUploadProgress(0);
     setUploading(false);
+    setAttendee(false);
   };
 
   const fileToBase64 = (file) =>
@@ -167,6 +169,13 @@ export default function RSVPForm() {
         errorAlert("Upload Failed", "Please try again.");
       }
     } else {
+      setAttendee(true);
+
+      if (!formData.email || formData.adultNames[0].trim() === "") {
+        errorAlert("Incomplete Form", "Please provide email and your name.");
+        return;
+      }
+      
       const payload = {
         email: formData.email,
         adults: formData.adults,
@@ -226,6 +235,7 @@ export default function RSVPForm() {
         handleAdults={handleAdults}
         handleChildren={handleChildren}
         resetForm={resetForm}
+        attendee={attendee}
       />
     )}
     {step === "video" && (
